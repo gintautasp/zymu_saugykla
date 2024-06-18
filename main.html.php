@@ -24,7 +24,7 @@
           form {
 		margin-bottom: 20px;
          }
-          input[type="text"], select {
+          input[type="text"], input[type="url"], select {
 		width: calc(100% - 22px);
 		padding: 10px;
 		margin-bottom: 10px;
@@ -107,6 +107,10 @@
 		background-position: right bottom;
 		color: white;
 	}
+	.data {
+		color: grey;
+		font-size: 10px;
+	}
     </style>
 </head>
 <body>
@@ -115,7 +119,7 @@
 	<form id="bookmark-form" method="POST" action="">
 		<input type="text" id="search-query" placeholder="Įveskite paieškos frazę">
 		<input type="text" id="bookmark-name"  name="bookmark-name"  placeholder="Puslapio pavadinimas" required>
-		<input type="text" id="bookmark-url"  name="bookmark-url" placeholder="Puslapio URL" >
+		<input type="url" id="bookmark-url"  name="bookmark-url" placeholder="Puslapio URL" >
 		<input type="hidden" id="id_nuorodos"  name="id_nuorodos" value="0">		
 		<select id="bookmark-category">
 		</select>
@@ -130,7 +134,9 @@
 		foreach ( $zymu_saugykla -> nuorodos -> sarasas as $nuoroda ) {
 ?>
 		<li class="bookmark-item">
-			<a href="<?= $nuoroda [ 'url' ] ?>" target="_blank"><?= $nuoroda [ 'pav' ]  ?></a><button>Šalinti</button>
+			<a href="<?= $nuoroda [ 'url' ] ?>" target="_blank"><?= $nuoroda [ 'pav' ]  ?></a><br>
+			<span class="data"><?= $nuoroda [ 'data' ] ?></span>
+			<button>Šalinti</button>
 		</li>
 <?php
 		}

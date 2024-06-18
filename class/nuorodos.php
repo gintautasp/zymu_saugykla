@@ -12,7 +12,7 @@
 			$gw_gauti_sarasa =
 					"
 				SELECT 
-					`id`, `url`, `pav`
+					`id`, `url`, `pav`, `data`
 				FROM 
 					`nuorodos`
 				WHERE
