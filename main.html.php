@@ -125,7 +125,17 @@
 			<button class="button" onclick="addCategory()">Pridėti kategoriją</button>
 		</div>
 	</form>
-	<ul id="bookmarks-list" class="bookmark-list"></ul>
+	<ul id="bookmarks-list" class="bookmark-list">
+<?php
+		foreach ( $zymu_saugykla -> nuorodos -> sarasas as $nuoroda ) {
+?>
+		<li class="bookmark-item">
+			<a href="<?= $nuoroda [ 'url' ] ?>" target="_blank"><?= $nuoroda [ 'pav' ]  ?></a><button>Šalinti</button>
+		</li>
+<?php
+		}
+?>
+	</ul>
 	<ul id="categories-list" class="categories-list"></ul>
 	</div>
 </body>

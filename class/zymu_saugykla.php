@@ -26,5 +26,7 @@
 
 		public function gautiDuomenis() {
 		
+			$this -> nuorodos = new Nuorodos();
+			$this -> nuorodos -> gautiSarasaIsDuomenuBazes();
 		}		
 	}
