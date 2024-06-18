@@ -11,6 +11,19 @@
 		margin: 0;
 		padding: 0;
          }
+	 #side_left {
+		width: calc(( 100% - 900px ) / 2); 
+		margin-left: 20px;
+		/* border: 1px solid black; */
+		float: left;
+	 }
+	 #side_right {
+		width: calc(( 100% - 900px ) / 2); 
+		margin-right: 20px;
+		text-align: right;
+		/* border: 1px solid black; */	
+		float: right;
+	 }	 
           .container {
 		max-width: 800px;
 		margin: 50px auto;
@@ -114,15 +127,36 @@
     </style>
 </head>
 <body>
+	<aside id="side_left">
+		<a class="zyma" href="/zymu-saugykla/">visos</a>
+<?php	
+		
+		for ( $i = 0; $i < count ( $zymu_saugykla -> zymos -> sarasas ); $i +=2 ) {
+?>			
+			<a class="zyma" href="?tag=<?= $zymu_saugykla -> zymos -> sarasas [ $i ] [ 'zyma' ]?>"><?= $zymu_saugykla -> zymos -> sarasas [ $i ] [ 'zyma' ]?></a>
+<?php
+		}
+?>
+	</aside>
+	<aside id="side_right">
+		<a class="zyma" href="/zymu-saugykla/?tag=be žymų">be žymų</a>	
+<?php	
+		
+		for ( $i = 1; $i < count ( $zymu_saugykla -> zymos -> sarasas ); $i +=2 ) {
+?>			
+			<a class="zyma" href="?tag=<?= $zymu_saugykla -> zymos -> sarasas [ $i ] [ 'zyma' ]?>"><?= $zymu_saugykla -> zymos -> sarasas [ $i ] [ 'zyma' ]?></a>
+<?php
+		}
+?>
+	</aside>	
 	<div class="container">
 	<h1>Mano Žymos</h1>
 	<form id="bookmark-form" method="POST" action="">
 		<input type="text" id="search-query" placeholder="Įveskite paieškos frazę">
 		<input type="text" id="bookmark-name"  name="bookmark-name"  placeholder="Puslapio pavadinimas" required>
 		<input type="url" id="bookmark-url"  name="bookmark-url" placeholder="Puslapio URL" >
-		<input type="hidden" id="id_nuorodos"  name="id_nuorodos" value="0">		
-		<select id="bookmark-category">
-		</select>
+		<input type="text" id="zymu_zymos" name="bookmark-tags" placeholder="Žymos atskirtos kableliais">
+		<input type="hidden" id="id_nuorodos"  name="id_nuorodos" value="0">
 		<div class="button-group">
 			<button class="button" type="button" onclick="searchWebsites()">Ieškoti</button>
 			<input type="submit" name="prideti" value="Pridėti žymą" class="button" onclick="addBookmark()">

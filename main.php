@@ -12,7 +12,8 @@
 	include $dir_bendra . 'model_db_sarasas.class.php';
 
 	include 'class/nuoroda.php';
-	include 'class/nuorodos.php';	
+	include 'class/nuorodos.php';
+	include 'class/zymos.php';	
 
 	require $dir_bendra . '../bendram/controller.class.php';
 
