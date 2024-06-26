@@ -12,7 +12,7 @@
 		public function tikrintiUzklausuDuomenis() {
 		
 			$this -> ar_sukurti_nauja_nuoroda = isset ( $_POST [ 'prideti' ] ) && ( $_POST [ 'prideti' ] == 'Pridėti žymą' )   && ( $_POST [ 'id_nuorodos' ] == '0' );
-			$this -> ar_pasalinti_nuoroda = isset ( $_POST [ 'salinti' ] ) && ( $_POST [ 'salinti' ] == 'Šalinti' )   && ( intval ( $_POST [ 'id_salinamos_nuorodos' ] ) > 0 );						
+			$this -> ar_pasalinti_nuoroda = isset ( $_POST [ 'salinti' ] ) && ( $_POST [ 'salinti' ] == 'salinti' )   && ( intval ( $_POST [ 'id_salinamos_nuorodos' ] ) > 0 );						
 			$this -> ar_pasirinkta_zyma = isset ( $_GET [ 'tag' ] ) && ( $_GET [ 'tag' ] != '' );
 		}
 	
@@ -27,6 +27,22 @@
 			$nuoroda -> issaugotiNauja();	
 
 			$this -> zymos -> atnaujintiZymas( $_POST [ 'bookmark-tags' ] );
+		}
+		
+		public function arSalinamaZyma() {
+			
+			return $this -> ar_pasalinti_nuoroda;
+		}
+		
+		public function salintiZyma() {
+		
+			$salinama_nuoroda = new Nuoroda ( '', '', '', $_POST [ 'id_salinamos_nuorodos' ] );
+			$salinama_nuoroda -> pasiimtiDuomenis() ;
+			
+			$this -> zymos = new Zymos();	
+			$this -> zymos -> mazintiZymuKartojimosiKieki ( $salinama_nuoroda -> zymos );			
+			
+			$salinama_nuoroda -> pasalinti();		
 		}
 
 		public function gautiDuomenis() {

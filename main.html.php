@@ -124,7 +124,24 @@
 		color: grey;
 		font-size: 10px;
 	}
+	.iraso_mygtukai {
+		width: auto;
+		margin: 1px 2px;
+		border-radius: 20px;		
+	}
     </style>
+    <script>
+		function salinti( id ) {
+		
+			 if ( confirm( "Ar tikrai norite pašalinti šį įrašą" ) == true ) {
+			 
+				id_salinamos_nuorodos = document.getElementById ( 'id_salinamos_nuorodos' );
+				id_salinamos_nuorodos.value = id;
+				salinimo_forma = document.getElementById ( 'salinimo-forma' );
+				salinimo_forma.submit();
+			} 
+		}
+    </script>
 </head>
 <body>
 	<aside id="side_left">
@@ -163,6 +180,10 @@
 			<button class="button" onclick="addCategory()">Pridėti kategoriją</button>
 		</div>
 	</form>
+	<form id="salinimo-forma" method="POST" action="">
+		<input type="hidden" name="salinti" value="salinti">
+		<input type="hidden" id="id_salinamos_nuorodos"  name="id_salinamos_nuorodos"value="0">
+	</form>
 	<ul id="bookmarks-list" class="bookmark-list">
 <?php
 		foreach ( $zymu_saugykla -> nuorodos -> sarasas as $nuoroda ) {
@@ -170,7 +191,8 @@
 		<li class="bookmark-item">
 			<a href="<?= $nuoroda [ 'url' ] ?>" target="_blank"><?= $nuoroda [ 'pav' ]  ?></a><br>
 			<span class="data"><?= $nuoroda [ 'data' ] ?></span>
-			<button>Šalinti</button>
+			<button class="iraso_mygtukai">&#9998;</button>
+			<button class="iraso_mygtukai" onClick="salinti(<?= $nuoroda [ 'id' ] ?>)">&#10006;</button>			
 		</li>
 <?php
 		}

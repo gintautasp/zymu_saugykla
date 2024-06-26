@@ -26,6 +26,10 @@
 	if ( $zymu_saugykla -> arYraGautaNaujaZyma() ) {
 	
 		$zymu_saugykla -> sukurtiNaujaZyma();
+	} 
+	if ( $zymu_saugykla -> arSalinamaZyma() ) {
+		
+		$zymu_saugykla -> salintiZyma();
 	}
 	
 	$zymu_saugykla -> gautiDuomenis();

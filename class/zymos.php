@@ -64,7 +64,7 @@
 				FROM 
 					`zymos`
 				WHERE
-					1
+					`kiek_kartojasi`>0
 				ORDER BY
 					`kiek_kartojasi` DESC
 					";

@@ -25,5 +25,38 @@
 					";
 																																	//	echo $qw_issaugoti_nauja;
 			$this -> db -> uzklausa ( $qw_issaugoti_nauja );
+		}
+		
+		public function pasiimtiDuomenis() {
+
+			$qw_gauti_nuoroda =
+					"
+				SELECT 
+					*
+				FROM
+					`nuorodos`
+				WHERE
+					`id`= " . $this -> id . "
+					";
+			$rs_list = $this -> db -> uzklausa ( $qw_gauti_nuoroda );
+			
+			if ( $row = $rs_list -> fetch_assoc() ) {
+			
+				$this -> url = $row [ 'url' ];
+				$this -> pav = $row [ 'pav' ];
+				$this -> zymos = $row [ 'zymos' ];				
+			}
 		}		
+
+		public function pasalinti() {
+		
+			$qw_pasalinti =
+					"
+				DELETE FROM `nuorodos`
+				WHERE
+					`id`=" . $this -> id . "
+					";
+																																	//	echo $qw_issaugoti_nauja;
+			$this -> db -> uzklausa ( $qw_pasalinti );		
+		}
 	}
