@@ -27,6 +27,12 @@
 	
 		$zymu_saugykla -> sukurtiNaujaZyma();
 	} 
+	
+	if ( $zymu_saugykla -> arPakeistiEsamaNuoroda() ) {
+	
+		$zymu_saugykla -> pakeistiEsamaNuoroda();
+	}		
+	
 	if ( $zymu_saugykla -> arSalinamaZyma() ) {
 		
 		$zymu_saugykla -> salintiZyma();

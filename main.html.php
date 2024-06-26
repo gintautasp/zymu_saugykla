@@ -64,8 +64,10 @@
 		padding: 0;
          }
         .bookmark-item {
+		/*
 		display: flex;
 		justify-content: space-between;
+		*/
 		background: #fff;
 		padding: 10px;
 		margin-bottom: 10px;
@@ -130,17 +132,70 @@
 		border-radius: 20px;		
 	}
     </style>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
     <script>
-		function salinti( id ) {
-		
-			 if ( confirm( "Ar tikrai norite pašalinti šį įrašą" ) == true ) {
-			 
-				id_salinamos_nuorodos = document.getElementById ( 'id_salinamos_nuorodos' );
-				id_salinamos_nuorodos.value = id;
-				salinimo_forma = document.getElementById ( 'salinimo-forma' );
-				salinimo_forma.submit();
-			} 
-		}
+	
+		$( document ).ready( function() {
+
+			function duomenys_i_forma(  duomenys ) {
+			
+				$( '#id_nuorodos' ).val ( duomenys.id );
+				$( '#bookmark-name' ).val ( duomenys.pav );
+				$( '#bookmark-url' ).val ( duomenys.url );
+				$( '#zymu_zymos' ).val ( duomenys.zymos );	
+			}
+
+			$( '#paieska' ).click ( function() {
+			
+				$( '#atlikti_paieska' ).val ( 'ieskoti' );
+				$( '#bookmark-form' ).submit(); 
+			});
+    
+			$( '.redaguoti' ).each ( function() {
+			
+				$( this ).click ( function() {
+					
+					// pasiimti įrašą iš duomenų bazės pasinaudojant ajax technologija
+					id = $( this ).data ( 'id_iraso' );
+					
+					$.get ( 'http://localhost/zymu-saugykla/nuorodos-duomenys.php?i=' + id , function( data ) {
+						
+						duomenys = JSON.parse ( data );
+						
+						// surašyti reikšmes į įvedimo laukelius kooregavimui
+						
+						duomenys_i_forma(  duomenys );
+					});				
+					
+
+					// nustatyti kooreguojamos nuorodos id formoje
+					
+					// id_nuorodos = document.getElementById ( 'id_nuorodos' );
+					// id_nuorodos.value = id;
+					
+					// pakeisti mygtuko reikšmę iš "Pridėti žymą" į "Pakeisti žymą"
+					
+					atlikti_mygtukas = document.getElementById ( 'atlikti' );
+					atlikti_mygtukas.value = 'Pakeisti žymą';
+				});
+			});
+	    
+			$( '.salinti' ).each ( function() {
+			
+				$( this ).click ( function() {
+			
+					id = $( this ).data ( 'id_iraso' );
+
+					 if ( confirm( "Ar tikrai norite pašalinti šį įrašą" ) == true ) {
+					 
+						id_salinamos_nuorodos = document.getElementById ( 'id_salinamos_nuorodos' );
+						id_salinamos_nuorodos.value = id;
+						salinimo_forma = document.getElementById ( 'salinimo-forma' );
+						salinimo_forma.submit();
+					} 
+				});
+			});
+		});
     </script>
 </head>
 <body>
@@ -169,15 +224,15 @@
 	<div class="container">
 	<h1>Mano Žymos</h1>
 	<form id="bookmark-form" method="POST" action="">
-		<input type="text" id="search-query" placeholder="Įveskite paieškos frazę">
+		<input type="text" id="search-query"  name="search-query" placeholder="Įveskite paieškos frazę">
 		<input type="text" id="bookmark-name"  name="bookmark-name"  placeholder="Puslapio pavadinimas" required>
 		<input type="url" id="bookmark-url"  name="bookmark-url" placeholder="Puslapio URL" >
 		<input type="text" id="zymu_zymos" name="bookmark-tags" placeholder="Žymos atskirtos kableliais">
 		<input type="hidden" id="id_nuorodos"  name="id_nuorodos" value="0">
 		<div class="button-group">
-			<button class="button" type="button" onclick="searchWebsites()">Ieškoti</button>
-			<input type="submit" name="prideti" value="Pridėti žymą" class="button" onclick="addBookmark()">
-			<button class="button" onclick="addCategory()">Pridėti kategoriją</button>
+			<button class="button" id="paieska">Ieškoti</button>
+			<input type="hidden" id="atlikti_paieska" name="atlikti_paieska" value="neieskoti">
+			<input type="submit" id="atlikti" name="atlikti" value="Pridėti žymą" class="button">
 		</div>
 	</form>
 	<form id="salinimo-forma" method="POST" action="">
@@ -191,8 +246,8 @@
 		<li class="bookmark-item">
 			<a href="<?= $nuoroda [ 'url' ] ?>" target="_blank"><?= $nuoroda [ 'pav' ]  ?></a><br>
 			<span class="data"><?= $nuoroda [ 'data' ] ?></span>
-			<button class="iraso_mygtukai">&#9998;</button>
-			<button class="iraso_mygtukai" onClick="salinti(<?= $nuoroda [ 'id' ] ?>)">&#10006;</button>			
+			<button class="iraso_mygtukai redaguoti" data-id_iraso="<?= $nuoroda [ 'id' ] ?>">&#9998;</button>
+			<button class="iraso_mygtukai salinti"   data-id_iraso="<?= $nuoroda [ 'id' ] ?>">&#10006;</button>			
 		</li>
 <?php
 		}

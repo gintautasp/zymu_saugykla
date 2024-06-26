@@ -27,6 +27,22 @@
 			$this -> db -> uzklausa ( $qw_issaugoti_nauja );
 		}
 		
+		public function pakeistiDuomenis() {
+		
+			$qw_pakeisti_duomenis =
+					"
+				UPDATE `nuorodos`
+				SET
+					`url`='" . $this -> url . "'
+					, `pav`='" . $this -> pav . "'
+					, `zymos`='" . $this -> zymos . "'
+				WHERE
+					`id`=" . $this -> id . "
+					";
+																																	//	echo $qw_pakeisti_duomenis;
+			$this -> db -> uzklausa ( $qw_pakeisti_duomenis );
+		}		
+		
 		public function pasiimtiDuomenis() {
 
 			$qw_gauti_nuoroda =

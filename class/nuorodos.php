@@ -9,9 +9,41 @@
 			parent::__construct();
 		}
 		
-		public function detaliosPaieskosParametrai ( $zymos ) {
+		public function paieskosParametrai ( $paieskos_tekstas, $url, $pav, $zymos ) {
 		
 			$salygu_sujungimas = 'AND';
+			
+			if ( trim ( $paieskos_tekstas) != '' ) {
+			
+				$this -> paieskos_kriterijai .= 
+						"
+					" . $salygu_sujungimas . " (
+						`url` LIKE '%" . $paieskos_tekstas . "%' 
+					OR
+						`pav` LIKE '%" . $paieskos_tekstas . "%' 
+					OR
+						`zymos` LIKE '%" . $paieskos_tekstas . "%' 
+					)
+						";
+			}
+			
+			if ( trim ( $url ) != '' ) {
+			
+				$this -> paieskos_kriterijai .= 
+						"
+					" . $salygu_sujungimas . "
+						`url` LIKE '%" . $url . "%' 
+						";
+			}
+			
+			if ( trim ( $pav ) != '' ) {
+			
+				$this -> paieskos_kriterijai .= 
+						"
+					" . $salygu_sujungimas . "
+						`pav` LIKE '%" . $pav . "%' 
+						";
+			}			
 			
 			if ( $zymos == 'be žymų' ) { 
 		
@@ -28,7 +60,8 @@
 					" . $salygu_sujungimas . "
 						`zymos` LIKE '%" . $zymos . "%' 
 						";
-			}		
+			}
+			// echo $this -> paieskos_kriterijai; exit;
 		}
 
 		public function gautiSarasaIsDuomenuBazes() {
